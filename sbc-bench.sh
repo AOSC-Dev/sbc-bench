@@ -336,11 +336,11 @@ CheckRelease() {
 	# Display warning when not executing on Debian Stretch or Ubuntu Bionic
 	Distro=$(lsb_release -c | awk -F" " '{print $2}' | tr '[:upper:]' '[:lower:]')
 	case ${Distro} in
-		stretch|bionic)
+		eMMC)
 			:
 			;;
 		*)
-			echo -e "${LRED}${BOLD}WARNING: this tool is meant to run only on Debian Stretch or Ubuntu Bionic.${NC}"
+			echo -e "${LRED}${BOLD}WARNING: this variant of this tool is modified to be run on AOSC OS \"eMMC\".${NC}"
 			echo -e "When running on other distros results are partially meaningless or can't be collected.\nPress [ctrl]-[c] to stop or [enter] to continue."
 			read
 			;;
@@ -425,7 +425,7 @@ InstallCpuminer() {
 	# get/build cpuminer if not already there
 	if [ ! -x "${InstallLocation}"/cpuminer-multi/cpuminer ]; then
 		cd "${InstallLocation}"
-		apt-get -f -qq -y install automake autoconf pkg-config libcurl4-openssl-dev libjansson-dev libssl-dev libgmp-dev make g++ zlib1g-dev >/dev/null 2>&1
+		apt-get -f -qq -y install automake autoconf pkg-config curl jansson openssl gmp  make gcc zlib >/dev/null 2>&1
 		git clone https://github.com/tkinjo1985/cpuminer-multi.git
 		cd cpuminer-multi/
 		./build.sh
