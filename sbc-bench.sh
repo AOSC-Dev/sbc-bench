@@ -94,7 +94,8 @@ MonitorBoard() {
 
 	# check platform
 	case $(lscpu | awk -F" " '/^Architecture/ {print $2}') in
-		x86*|i686)
+		x86*|i686|ppc*)
+			# Temporary use x86 PC codepath for PPC
 			IsIntel="yes"
 			;;
 	esac
@@ -369,7 +370,7 @@ BasicSetup() {
 				echo performance >/sys/devices/system/cpu/cpu${i}/cpufreq/scaling_governor
 			done
 			;;
-		x86*|i686)
+		x86*|i686|ppc*)
 			# Define CPUCores as 3 to prevent big.LITTLE handling and throttling reporting
 			CPUCores=3
 			# Try to get device name from CPU entry
